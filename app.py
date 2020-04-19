@@ -86,16 +86,16 @@ def admin(username, password):
 
     user = User.query.first()
     if user is not None:
-        click.echo('Update user ....')
+        click.echo('Updating user...')
         user.username = username
         user.set_password(password)
     else:
-        click.echo('Create user ...')
+        click.echo('Creating user...')
         user = User(username=username, name='Admin')
         user.set_password(password)
         db.session.add(user)
     db.session.commit()
-    click.echo('Done')
+    click.echo('Done.')
 
 
 login_manager = LoginManager(app)  # 实例化拓展类
@@ -129,7 +129,7 @@ def index():
         year = request.form.get('year')
         # 验证数据
         if not title or not  year or len(year) > 4 or len(title) > 60:
-            flash('Invalid input')  # 显示错误
+            flash('Invalid input.')  # 显示错误
             return redirect(url_for('index'))  # 重定向回主页
         movie = Movie(title=title, year=year)
         db.session.add(movie)
@@ -152,12 +152,12 @@ def edit(movie_id):
         year = request.form.get('year')
         # 验证数据
         if not title or not  year or len(year) > 4 or len(title) > 60:
-            flash('Invalid input')  # 显示错误
+            flash('Invalid input.')  # 显示错误
             return redirect(url_for('edit', movie_id=movie_id))  # 重定向回主页
         movie.title = title
         movie.year = year
         db.session.commit()
-        flash('Item update.')
+        flash('Item updated.')
         return redirect(url_for('index'))
     return render_template('edit.html', movie=movie)  # 传入被编辑的电影记录
 
@@ -169,7 +169,7 @@ def delete(movie_id):
     movie = Movie.query.get_or_404(movie_id)
     db.session.delete(movie)
     db.session.commit()
-    flash('Item deleted')
+    flash('Item deleted.')
     return redirect(url_for('index'))
 
 
@@ -213,7 +213,7 @@ def settings():
         name = request.form['name']
 
         if not name or len(name) > 20:
-            flash('Inavlid input.')
+            flash('Invalid input.')
             return redirect(url_for('settings'))
         current_user.name = name
         db.session.commit()
